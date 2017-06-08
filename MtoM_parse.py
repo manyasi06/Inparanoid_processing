@@ -35,7 +35,7 @@ def split_list_in_cols_to_rows(df, lst_cols):
 #the only thing that I did to modify the string all was change the string regular expression to allow
 #for a String that has a captial letter A-Z and repiptive digits for the first part of the regular expression
 # This is good because I sometimes have to modify the fasta headers because of duplicates in Ensembl
-df['OrtoB'] = df['OrtoB'].str.findall(r'([A-Z\d+]{1,}\s[\d\.]+)')
+df['OrtoB'] = df['OrtoB'].str.findall(r'([A-Za-z.:\d+]{1,}\s[\d\.]+)')
 new = split_list_in_cols_to_rows(df, 'OrtoB')
 
 #this is to do the first column of values as well just in case
