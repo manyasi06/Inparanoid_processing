@@ -14,7 +14,7 @@ The data should Column1 containing the geneid seperated by a tab
 
 
 bool fexists(const std::string& stringIn);
-
+void returnfile(std::ifstream&);
 
 int main() {
 	using namespace std;
@@ -38,7 +38,9 @@ int main() {
 	ifstream inputFile(stringIn);
 	ofstream outputFile(stringOut);
 
-	
+	ifstream * aptr = &inputFile;
+	returnfile(*aptr);
+
 
 	//Lets the user know if the file exists
 	if (!inputFile) {
@@ -49,7 +51,7 @@ int main() {
 		cout << "Can not save output file" << endl;
 	}
 
-
+	/*
 	//It should iterate through the values using column and column2 delimited by the pipe sign.
 	//For example GO:0005524|GO:0008026 and this could be of unknown length.
 	while (getline(inputFile,value)) {
@@ -57,17 +59,20 @@ int main() {
 			std::string p1 = (it++)->str();
 			//std::cout << "This is P1: " << p1 << " and " << it->str() << std::endl;
 			for (; it != reg_end; ++it) {
-				std::string test = it->str();
-				std::string test2 = test.substr(3, test.length());
-				outputFile << p1 << " = " << test2 << endl;			
+				//std::string test = it->str();
+				//std::string test2 = test.substr(3, test.length());
+				//outputFile << p1 << " " << test2 << endl;		
+				outputFile << p1 << "=" << it->str()  << endl;	
+				
 
 			}
 				}
 
+	*/
 
 	outputFile.close();
 	inputFile.close();
-	cin.get();
+	system("pause");
 
 	return 0;
 
@@ -98,6 +103,28 @@ oexists(stringOut);
 		ofstream outputFile(fileIn2.c_str());
 		return (bool)outputFile;
 
+	}
+
+
+	/*Perform hypergeometric test*/
+	void returnfile(std::ifstream& file) {
+		using namespace std;
+		regex re("\\s+|\\|"); //escape the space the pipe in the beginning and end.
+		sregex_token_iterator reg_end;  //regular expression
+		string value;
+
+
+		/*Loop is responsible for iterating through the values*/
+		while (getline(file, value)) 
+		{
+			sregex_token_iterator it(value.begin(), value.end(), re, -1);
+			std::string p1 = (it++)->str();
+			for (; it != reg_end; ++it) {
+				cout << p1 << " and " << it->str() << std::endl;
+
+			}
+
+		}
 	}
 
 
